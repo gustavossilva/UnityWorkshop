@@ -34,12 +34,14 @@ public class PlayerControl : MonoBehaviour
     public bool CanJump() {
         return (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && !isJumping && isLanding;
     }
+
     public void Jump() {
         this.playerBody.AddForce(Vector2.up * force, ForceMode2D.Impulse);
         isJumping = true;
         isWalking = false;
         isLanding = false;
     }
+
     private void resetDefaultValues(){
         this.initialBodyCollider.enabled = true;
         this.initialNoseCollider.enabled = true;
@@ -76,7 +78,6 @@ public class PlayerControl : MonoBehaviour
             }
             if(isLanding)
                 playerAnimator.SetBool("isWalking", isWalking);
-
         }
     }
     private void OnTriggerEnter2D(Collider2D collider) {
