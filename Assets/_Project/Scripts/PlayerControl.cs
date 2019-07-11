@@ -14,10 +14,15 @@ public class PlayerControl : MonoBehaviour
     public Collider2D initialNoseCollider;
     public Collider2D crounchCollider;
 
+    public Transform groundCheck;
+    public LayerMask groundMask;
+
+    public AudioSource dinoSounds;
+    public AudioClip jumpSound;
     public float force;
 
     private bool hasStarted = false;
-    private bool isLanding = true;
+    [SerializeField] private bool isLanding = true;
     private Rigidbody2D playerBody;
 
     private void Awake() {
@@ -32,17 +37,20 @@ public class PlayerControl : MonoBehaviour
     }
 
     public bool CanJump() {
-        return (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && !isJumping && isLanding;
+        bool jumpClicked = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow);
+        return jumpClicked && isLanding && !isJumping && !isCrounching;
     }
 
     public void Jump() {
+        this.isJumping = true;
+        this.isWalking = false;
+        dinoSounds.clip = jumpSound;
+        dinoSounds.Play();
         this.playerBody.AddForce(Vector2.up * force, ForceMode2D.Impulse);
-        isJumping = true;
-        isWalking = false;
-        isLanding = false;
     }
 
     private void resetDefaultValues(){
+        Debug.Log("Reseted");
         this.initialBodyCollider.enabled = true;
         this.initialNoseCollider.enabled = true;
         this.crounchCollider.enabled = false;
@@ -76,15 +84,13 @@ public class PlayerControl : MonoBehaviour
             if(Input.GetKeyUp(KeyCode.DownArrow) && isCrounching) {
                 resetDefaultValues();
             }
-            if(isLanding)
-                playerAnimator.SetBool("isWalking", isWalking);
+            if(isLanding && !isWalking && !isCrounching && isJumping){
+                resetDefaultValues();
+                playerAnimator.SetBool("isWalking", true);
+            }
         }
     }
-    private void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.tag.Equals("Ground"))
-        {
-            this.resetDefaultValues();
-            this.isLanding = true;
-        }
+    private void FixedUpdate() {
+        this.isLanding = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundMask);
     }
 }
