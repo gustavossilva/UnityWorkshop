@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
         if (!hasStarted) {
             return;
         }
-        
+
         //Faz as lógicas com o tempo passado no game e faz a pontuação
         time += Time.deltaTime;
         if (time > 0.1) {
@@ -45,5 +46,9 @@ public class GameManager : MonoBehaviour
         if (score != 0 && score % 100 == 0) {
             scoreSound.Play();
         }
+    }
+
+    public void RestartGame () {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
