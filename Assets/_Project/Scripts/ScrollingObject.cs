@@ -11,6 +11,9 @@ public class ScrollingObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.instance.hasStarted) {
+            return;
+        }
         transform.position += Vector3.left * (speed * Time.deltaTime);
         if(transform.position.x < finalPos) {
             transform.position = new Vector2(initialPos, Random.Range(yMin, yMax));

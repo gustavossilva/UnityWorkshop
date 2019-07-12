@@ -16,6 +16,9 @@ public class ScrollQuad : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!GameManager.instance.hasStarted) {
+            return;
+        }
         offset.x += Time.deltaTime * speed;
         offset.x %= 1;
         quadMaterial.mainTextureOffset = offset;

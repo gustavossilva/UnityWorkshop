@@ -20,8 +20,6 @@ public class PlayerControl : MonoBehaviour
     public AudioSource dinoSounds;
     public AudioClip jumpSound;
     public float force;
-
-    private bool hasStarted = false;
     [SerializeField] private bool isLanding = true;
     private Rigidbody2D playerBody;
 
@@ -63,13 +61,13 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!hasStarted && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))) {
+        if(!GameManager.instance.hasStarted && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))) {
             //Diferete do Javascript, o C# entende '' como um caractere e "" como uma string, então cuidado...
             // playerAnimator.SetBool("isJumping", true);
             Jump();
-            hasStarted = true;
+            GameManager.instance.hasStarted = true;
         }
-        if(hasStarted) {
+        if(GameManager.instance.hasStarted) {
             if(CanJump()) {
                 playerAnimator.SetBool("isWalking", false);
                 playerAnimator.SetBool("isJumping", true);
