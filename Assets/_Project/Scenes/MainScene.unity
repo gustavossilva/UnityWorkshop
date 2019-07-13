@@ -324,7 +324,7 @@ GameObject:
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &659459646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,8 +471,8 @@ GameObject:
   - component: {fileID: 1031515893}
   - component: {fileID: 1031515892}
   - component: {fileID: 1031515898}
-  - component: {fileID: 1031515897}
   - component: {fileID: 1031515899}
+  - component: {fileID: 1031515897}
   - component: {fileID: 1031515901}
   m_Layer: 0
   m_Name: Player
@@ -521,10 +521,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAnimator: {fileID: 1031515894}
   isJumping: 0
-  isWalking: 1
   isCrounching: 0
-  initialBodyCollider: {fileID: 1031515892}
-  initialNoseCollider: {fileID: 1031515898}
+  isLanding: 1
+  initialBodyCollider: {fileID: 1031515898}
+  initialNoseCollider: {fileID: 1031515892}
   crounchCollider: {fileID: 1031515899}
   groundCheck: {fileID: 336203889}
   groundMask:
@@ -533,7 +533,6 @@ MonoBehaviour:
   dinoSounds: {fileID: 1031515901}
   jumpSound: {fileID: 8300000, guid: 3d79fd9aebb676147b07a5cf83708198, type: 3}
   force: 4
-  isLanding: 1
 --- !u!95 &1031515894
 Animator:
   serializedVersion: 3
