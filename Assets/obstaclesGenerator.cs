@@ -18,20 +18,14 @@ public class obstaclesGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.timeToNextObstacle -= Time.deltaTime;
-        if(this.timeToNextObstacle <= 0 && GameManager.instance.hasStarted) {
-            GameObject nextObstacle = this.obstacles[Random.Range(0, obstacles.Count - 1)];
-            Vector3 newPosition = new Vector3();
-            if(nextObstacle.name.Contains("Bird1")) {
-                if(Random.Range(0, 100) > 50) {
-                    newPosition = new Vector3(nextObstacle.transform.position.x, -0.360f, nextObstacle.transform.position.z);
-                }
-            } else {
-                newPosition = nextObstacle.transform.position;
+        if(GameManager.instance.hasStarted) {
+            Debug.Log("Elipsed Time " + timeToNextObstacle);
+            this.timeToNextObstacle -= Time.deltaTime;
+            if(this.timeToNextObstacle <= 0) {
+                this.timeToNextObstacle = time;
+                GameObject nextObstacle = this.obstacles[Random.Range(0, obstacles.Count - 1)];
+                GameObject.Instantiate(nextObstacle);
             }
-            GameObject next = GameObject.Instantiate(nextObstacle) as GameObject;
-            next.transform.position = newPosition;
-            timeToNextObstacle = time;
         }
     }
 }

@@ -9,6 +9,9 @@ public class ScrollingObject : MonoBehaviour
     public float yMin;
 
     // Update is called once per frame
+    void Start() {
+        // transform.position = new Vector2(initialPos, Random.Range(yMin, yMax));
+    }
     void Update()
     {
         if (!GameManager.instance.hasStarted) {
@@ -16,7 +19,8 @@ public class ScrollingObject : MonoBehaviour
         }
         transform.position += Vector3.left * (speed * Time.deltaTime);
         if(transform.position.x < finalPos) {
-            transform.position = new Vector2(initialPos, Random.Range(yMin, yMax));
+            Destroy(gameObject);
+            // transform.position = new Vector2(initialPos, Random.Range(yMin, yMax));
         }
     }
 }
