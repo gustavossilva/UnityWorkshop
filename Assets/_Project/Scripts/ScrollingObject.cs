@@ -10,7 +10,11 @@ public class ScrollingObject : MonoBehaviour
 
     // Update is called once per frame
     void Start() {
-        // transform.position = new Vector2(initialPos, Random.Range(yMin, yMax));
+        float y = yMin;
+        if(Random.Range(0,100) > 50) {
+            y = yMax;
+        }
+        transform.position = new Vector2(initialPos, y);
     }
     void Update()
     {

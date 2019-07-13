@@ -19,6 +19,7 @@ public class PlayerControl : MonoBehaviour
 
     public AudioSource dinoSounds;
     public AudioClip jumpSound;
+    public AudioClip dieSound;
     private Rigidbody2D playerBody;
     public float force;
 
@@ -89,6 +90,13 @@ public class PlayerControl : MonoBehaviour
             this.playerAnimator.SetBool("isCrounching", false);
             this.playerAnimator.SetBool("isJumping", false);
         }
-
+    }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.tag == "obstacle") {
+            dinoSounds.clip = dieSound;
+            dinoSounds.Play();
+            playerAnimator.SetBool("isDead", true);
+            GameManager.instance.gameOver = true;
+        }
     }
 }

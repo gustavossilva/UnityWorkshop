@@ -324,7 +324,7 @@ GameObject:
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &659459646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,6 +532,7 @@ MonoBehaviour:
     m_Bits: 256
   dinoSounds: {fileID: 1031515901}
   jumpSound: {fileID: 8300000, guid: 3d79fd9aebb676147b07a5cf83708198, type: 3}
+  dieSound: {fileID: 8300000, guid: eec17d6d7515c5f43881c66e93ba7b5d, type: 3}
   force: 4
 --- !u!95 &1031515894
 Animator:
@@ -815,8 +816,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0e43057d1784507b12f21455ab5daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverUi: {fileID: 1836549643}
   dontDestroyOnLoad: 0
   hasStarted: 0
+  gameOver: 0
   scoreUI: {fileID: 543799774}
   score: 0
   time: 0

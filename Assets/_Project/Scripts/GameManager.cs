@@ -6,8 +6,11 @@ public class GameManager : MonoBehaviour
 {
     //Cria a referência estática para instância
     public static GameManager instance = null;
+
+    public GameObject gameOverUi;
     public bool dontDestroyOnLoad = false;
     public bool hasStarted = false;
+    public bool gameOver = false;
     
     //Lógicas do score;
     public TextMeshProUGUI scoreUI;
@@ -16,6 +19,7 @@ public class GameManager : MonoBehaviour
     public AudioSource scoreSound;
 
     void Awake() {
+        Time.timeScale = 1;
         scoreSound = GetComponent<AudioSource>();
         //Se não há uma instância inicializada ainda para esse script, cria ela
         if (instance == null) {
@@ -32,9 +36,15 @@ public class GameManager : MonoBehaviour
     }
 
     void Update() {
+        if(gameOver) {
+            gameOverUi.SetActive(true);
+            Time.timeScale = 0;
+            return;
+        }
         if (!hasStarted) {
             return;
         }
+
 
         //Faz as lógicas com o tempo passado no game e faz a pontuação
         time += Time.deltaTime;
