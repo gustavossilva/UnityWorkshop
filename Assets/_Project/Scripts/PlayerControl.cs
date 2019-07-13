@@ -26,41 +26,21 @@ public class PlayerControl : MonoBehaviour
     private void Awake() {
         playerBody = gameObject.GetComponent<Rigidbody2D>();
     }
-    public void setCrounch() {
-        this.isCrounching = true;
-        this.isWalking = false;
-        this.initialBodyCollider.enabled = false;
-        this.initialNoseCollider.enabled = false;
-        this.crounchCollider.enabled = true;
-    }
-
     public bool CanJump() {
         bool jumpClicked = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow);
-        return jumpClicked && isLanding && !isJumping && !isCrounching;
+        return jumpClicked && isLanding && !isCrounching;
     }
 
     public void Jump() {
-        this.isJumping = true;
-        this.isWalking = false;
         dinoSounds.clip = jumpSound;
         dinoSounds.Play();
         this.playerBody.AddForce(Vector2.up * force, ForceMode2D.Impulse);
     }
-
-    private void resetDefaultValues(){
-        Debug.Log("Reseted");
-        this.initialBodyCollider.enabled = true;
-        this.initialNoseCollider.enabled = true;
-        this.crounchCollider.enabled = false;
-        this.isWalking = true;
-        this.isCrounching = false;
-        this.isJumping = false;
-        this.playerAnimator.SetBool("isCrounching", false);
-        this.playerAnimator.SetBool("isJumping", false);
-    }
     // Update is called once per frame
     void Update()
     {
+        this.isLanding = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundMask);
+
         if(!GameManager.instance.hasStarted && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))) {
             //Diferete do Javascript, o C# entende '' como um caractere e "" como uma string, então cuidado...
             // playerAnimator.SetBool("isJumping", true);
@@ -74,21 +54,25 @@ public class PlayerControl : MonoBehaviour
                 Jump();
             }
             if(Input.GetKeyDown(KeyCode.DownArrow) && isLanding) {
-                setCrounch();
+                this.isCrounching = true;
+                this.initialBodyCollider.enabled = false;
+                this.initialNoseCollider.enabled = false;
+                this.crounchCollider.enabled = true;
                 playerAnimator.SetBool("isWalking", false);
                 playerAnimator.SetBool("isCrounching", true);
 
             }
             if(Input.GetKeyUp(KeyCode.DownArrow) && isCrounching) {
-                resetDefaultValues();
+                this.initialBodyCollider.enabled = true;
+                this.initialNoseCollider.enabled = true;
+                this.crounchCollider.enabled = false;
+                this.isCrounching = false;
             }
-            if(isLanding && !isWalking && !isCrounching && isJumping){
-                resetDefaultValues();
+            if(isLanding && !isCrounching){
                 playerAnimator.SetBool("isWalking", true);
+                this.playerAnimator.SetBool("isCrounching", false);
+                this.playerAnimator.SetBool("isJumping", false);
             }
         }
-    }
-    private void FixedUpdate() {
-        this.isLanding = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundMask);
     }
 }
