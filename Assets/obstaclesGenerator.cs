@@ -19,11 +19,10 @@ public class obstaclesGenerator : MonoBehaviour
     void Update()
     {
         if(GameManager.instance.hasStarted) {
-            Debug.Log("Elipsed Time " + timeToNextObstacle);
-            this.timeToNextObstacle -= Time.deltaTime;
-            if(this.timeToNextObstacle <= 0) {
-                this.timeToNextObstacle = time;
-                GameObject nextObstacle = this.obstacles[Random.Range(0, obstacles.Count - 1)];
+            this.time -= Time.deltaTime;
+            if(this.time <= 0) {
+                this.time = this.timeToNextObstacle;
+                GameObject nextObstacle = this.obstacles[Random.Range(0, 3)];
                 GameObject.Instantiate(nextObstacle);
             }
         }
